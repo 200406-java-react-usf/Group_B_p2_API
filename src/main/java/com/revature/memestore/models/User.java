@@ -30,6 +30,9 @@ public class User {
     @Column
     private int role_id;
 
+    public User() {
+    }
+
     public User(String username, String password, String email, String first_name, String last_name, int role_id) {
         this.username = username;
         this.password = password;
