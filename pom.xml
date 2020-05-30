@@ -140,7 +140,7 @@
                     <configuration>
                         <url>http://localhost:8080/manager/text</url>
                         <server>LocalTomcat</server>
-                        <path>/quizzard</path>
+                        <path>/memestore</path>
                         <update>true</update>
                     </configuration>
                 </plugin>
