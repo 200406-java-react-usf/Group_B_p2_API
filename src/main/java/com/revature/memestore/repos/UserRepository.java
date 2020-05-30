@@ -1,25 +1,44 @@
 package com.revature.memestore.repos;
 
+import com.revature.memestore.models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public class UserRepository implements CrudRepository {
+@Repository
+public class UserRepository implements CrudRepository<User> {
+
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public UserRepository(SessionFactory factory){
+
+        this.sessionFactory = factory;
+
+    }
+
     @Override
-    public List getAll() {
+    public List<User> getAll() {
         return null;
     }
 
     @Override
-    public Object findById(int id) {
+    public User findById(int id) {
         return null;
     }
 
     @Override
-    public Object save(Object newObj) {
-        return null;
+    public User save(User newUser) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(newUser);
+        return newUser;
     }
 
     @Override
-    public boolean update(Object updatedObj) {
+    public boolean update(User updatedObj) {
         return false;
     }
 
