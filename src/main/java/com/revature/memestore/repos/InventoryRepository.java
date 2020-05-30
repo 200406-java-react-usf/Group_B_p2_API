@@ -40,6 +40,8 @@ public class InventoryRepository implements CrudRepository<Inventory> {
 
     @Override
     public boolean deleteById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(id);
         return false;
     }
 }
