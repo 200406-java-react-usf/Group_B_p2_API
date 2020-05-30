@@ -22,12 +22,15 @@ public class InventoryRepository implements CrudRepository<Inventory> {
 
     @Override
     public Inventory findById(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Inventory.class, id);
     }
 
     @Override
     public Inventory save(Inventory newObj) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        session.save(newObj);
+        return newObj;
     }
 
     @Override
