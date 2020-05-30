@@ -42,6 +42,6 @@ public class InventoryRepository implements CrudRepository<Inventory> {
     public boolean deleteById(int id) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(id);
-        return false;
+        return true;
     }
 }
