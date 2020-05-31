@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -15,6 +17,13 @@ public class UserService {
     public UserService(UserRepository userRepository){
 
         this.userRepo = userRepository;
+
+    }
+
+    @Transactional
+    public List<User> getAllUsers(){
+
+        return userRepo.getAll();
 
     }
 
