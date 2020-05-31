@@ -10,7 +10,7 @@ public class Invoice {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int item_id;
+    private int invoice_id;
 
     @Column(nullable = false)
     private String user_id;
@@ -21,6 +21,9 @@ public class Invoice {
     @Column(nullable = false)
     private String date_ordered;
 
+    public Invoice() {
+    }
+
     public Invoice(String user_id, float total_cost, String date_ordered) {
         this.user_id = user_id;
         this.total_cost = total_cost;
@@ -28,7 +31,7 @@ public class Invoice {
     }
 
     public int getItem_id() {
-        return item_id;
+        return invoice_id;
     }
 
     public String getUser_id() {
@@ -63,7 +66,7 @@ public class Invoice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return item_id == invoice.item_id &&
+        return invoice_id == invoice.invoice_id &&
                 Float.compare(invoice.total_cost, total_cost) == 0 &&
                 Objects.equals(user_id, invoice.user_id) &&
                 Objects.equals(date_ordered, invoice.date_ordered);
@@ -71,13 +74,13 @@ public class Invoice {
 
     @Override
     public int hashCode() {
-        return Objects.hash(item_id, user_id, total_cost, date_ordered);
+        return Objects.hash(invoice_id, user_id, total_cost, date_ordered);
     }
 
     @Override
     public String toString() {
         return "Invoice{" +
-                "item_id=" + item_id +
+                "item_id=" + invoice_id +
                 ", user_id='" + user_id + '\'' +
                 ", total_cost=" + total_cost +
                 ", date_ordered='" + date_ordered + '\'' +
