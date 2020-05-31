@@ -20,10 +20,19 @@ public class UserService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> getAllUsers(){
 
         return userRepo.getAll();
+
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserById(int id){
+
+        //Validation
+
+        return userRepo.findById(id);
 
     }
 
@@ -37,5 +46,20 @@ public class UserService {
 
     }
 
+    @Transactional
+    public boolean updateUser(User updatedUser){
+
+        //Validation
+
+        return userRepo.update(updatedUser);
+
+    }
+
+    @Transactional
+    public boolean deleteUserById(int id){
+
+        return userRepo.deleteById(id);
+
+    }
 
 }

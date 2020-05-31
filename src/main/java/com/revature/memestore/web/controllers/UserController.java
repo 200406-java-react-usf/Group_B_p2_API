@@ -29,10 +29,31 @@ public class UserController {
 
     }
 
+    @GetMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUserById(@RequestParam(required = false) int value){
+
+        return userService.getUserById(value);
+
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public User registerNewUser(@RequestBody User newUser){
 
         return userService.register(newUser);
+
+    }
+
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean updateUser(@RequestBody User updatedUser){
+
+        return userService.updateUser(updatedUser);
+
+    }
+
+    @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean deleteUserById(@RequestParam int id){
+
+        return userService.deleteUserById(id);
 
     }
 

@@ -30,7 +30,8 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public User findById(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, id);
     }
 
     @Override
@@ -41,12 +42,26 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     @Override
-    public boolean update(User updatedObj) {
-        return false;
+    public boolean update(User updatedUser) {
+
+        Session session = sessionFactory.getCurrentSession();
+        User userToUpdate = session.get(User.class, updatedUser.getUser_id());
+        userToUpdate.setUsername(updatedUser.getUsername());
+        userToUpdate.setPassword(updatedUser.getPassword());
+        userToUpdate.setEmail(updatedUser.getEmail());
+        userToUpdate.setFirst_name(updatedUser.getFirst_name());
+        userToUpdate.setLast_name(updatedUser.getLast_name());
+        return true;
+
     }
 
     @Override
     public boolean deleteById(int id) {
-        return false;
+
+        Session session = sessionFactory.getCurrentSession();
+        User userToDelete = session.get(User.class, id);
+        session.delete(userToDelete);
+
+        return true;
     }
 }
