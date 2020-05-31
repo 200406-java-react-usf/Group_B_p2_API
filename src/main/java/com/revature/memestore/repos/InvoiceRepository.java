@@ -1,25 +1,27 @@
 package com.revature.memestore.repos;
 
+import com.revature.memestore.models.Invoice;
+
 import java.util.List;
 
-public class InvoiceRepository implements CrudRepository {
+public class InvoiceRepository implements CrudRepository<Invoice> {
     @Override
-    public List getAll() {
+    public List<Invoice> getAll() {
         return null;
     }
 
     @Override
-    public Object findById(int id) {
+    public Invoice findById(int id) {
         return null;
     }
 
     @Override
-    public Object save(Object newObj) {
+    public Invoice save(Invoice newInvoice) {
         return null;
     }
 
     @Override
-    public boolean update(Object updatedObj) {
+    public boolean update(Invoice updatedInvoice) {
         return false;
     }
 
