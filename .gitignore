@@ -1,0 +1,10 @@
+./src/main/resources/app.properties
+/src/main/resources/app.properties
+target/classes
+target/generated-sources
+target/generated-test-sources
+target/maven-archiver
+target/maven-status
+target/surefire-reports
+target/Group_B_p2_API-1.0-SNAPSHOT
+target/test-classes
