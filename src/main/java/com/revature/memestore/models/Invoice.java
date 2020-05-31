@@ -13,7 +13,7 @@ public class Invoice {
     private int invoice_id;
 
     @Column(nullable = false)
-    private String user_id;
+    private int user_id;
 
     @Column(nullable = false)
     private float total_cost;
@@ -24,7 +24,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(String user_id, float total_cost, String date_ordered) {
+    public Invoice(int user_id, float total_cost, String date_ordered) {
         this.user_id = user_id;
         this.total_cost = total_cost;
         this.date_ordered = date_ordered;
@@ -34,11 +34,11 @@ public class Invoice {
         return invoice_id;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public Invoice setUser_id(String user_id) {
+    public Invoice setUser_id(int user_id) {
         this.user_id = user_id;
         return this;
     }
