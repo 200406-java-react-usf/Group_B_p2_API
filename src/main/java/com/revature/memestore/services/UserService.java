@@ -1,5 +1,6 @@
 package com.revature.memestore.services;
 
+import com.revature.memestore.exceptions.ResourceNotFoundException;
 import com.revature.memestore.models.User;
 import com.revature.memestore.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<User> getAllUsers(){
 
-        return userRepo.getAll();
+        List<User> result = userRepo.getAll();
+
+        if(result.isEmpty() == true){
+            throw new ResourceNotFoundException("Database contains no Users");
+        }
+
+        return result;
 
     }
 
