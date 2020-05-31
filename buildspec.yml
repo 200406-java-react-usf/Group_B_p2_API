@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  post_build:
+    commands:
+      - mvn package
+      - mv target/Group_B_p2_API-1.0-SNAPSHOT.war Group_B_p2_API-1.0-SNAPSHOT.war
+      - mvn tomcat7:deploy
+artifacts:
+  files:
+    - Group_B_p2_API-1.0-SNAPSHOT.war
+    - .ebextensions/**/*
+  base-directory: 'target/Group_B_p2_API-1.0-SNAPSHOT'
