@@ -22,7 +22,10 @@ public class UserRepository implements CrudRepository<User> {
 
     @Override
     public List<User> getAll() {
-        return null;
+
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM User", User.class).getResultList();
+
     }
 
     @Override
