@@ -27,11 +27,8 @@ public class InventoryService {
 
     @Transactional(readOnly = true)
     public List<Inventory> getAllItems() {
-        List<Inventory> inventory = inventoryRepository.getAll();
-//        if(inventory.size() == 0 ){
-//            throw new ResourceNotFoundException("There are no items in the Inventory");
-//        }
-        return inventory;
+        //
+        return inventoryRepository.getAll();
     }
 
     @Transactional(readOnly = true)
