@@ -26,6 +26,7 @@ public class InventoryController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Inventory> getAllItems(HttpServletRequest req){
+
         return inventoryService.getAllItems();
     }
 
@@ -46,6 +47,7 @@ public class InventoryController {
 
     @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean deleteInventoryById(@RequestParam int id){
+
         return inventoryService.deleteInventoryById(id);
     }
 
