@@ -7,7 +7,7 @@ phases:
   post_build:
     commands:
       - mvn package
-      - mv target/Group_B_p2_API-1.0-SNAPSHOT.war Group_B_p2_API-1.0-SNAPSHOT.war
+#      - mv target/Group_B_p2_API-1.0-SNAPSHOT.war Group_B_p2_API-1.0-SNAPSHOT.war
 #      - mvn tomcat7:deploy
 artifacts:
   files:
