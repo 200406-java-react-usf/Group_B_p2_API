@@ -7,10 +7,10 @@ phases:
   post_build:
     commands:
       - mvn package
-#      - mv target/Group_B_p2_API-1.0-SNAPSHOT.war Group_B_p2_API-1.0-SNAPSHOT.war
+      - mv target/Group_B_p2_API-1.0-SNAPSHOT.war Group_B_p2_API-1.0-SNAPSHOT.war
 #      - mvn tomcat7:deploy
 artifacts:
   files:
     - Group_B_p2_API-1.0-SNAPSHOT.war
     - .ebextensions/**/*
-  base-directory: 'Group_B_p2_API/target/Group_B_p2_API-1.0-SNAPSHOT'
+  base-directory: 'Group_B_p2_API-1.0-SNAPSHOT'
