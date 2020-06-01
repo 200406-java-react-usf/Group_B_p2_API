@@ -1,6 +1,7 @@
 package com.revature.memestore.repos;
 
 import com.revature.memestore.models.User;
+import com.revature.memestore.web.dtos.Credentials;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +65,15 @@ public class UserRepository implements CrudRepository<User> {
 
         return true;
     }
+
+    public User getByCredentials(Credentials creds){
+
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM User u " + "WHERE u.username = :un AND u.password = :pw", User.class)
+                .setParameter("un", creds.getUsername())
+                .setParameter("pw", creds.getPassword())
+                .getSingleResult();
+
+    }
+
 }
