@@ -13,4 +13,4 @@ artifacts:
   files:
     - target/Group_B_p2_API-1.0-SNAPSHOT.war
     - .ebextensions/**/*
-  base-directory: 'Group_B_p2_API-1.0-SNAPSHOT'
+  base-directory: 'target/Group_B_p2_API-1.0-SNAPSHOT'
