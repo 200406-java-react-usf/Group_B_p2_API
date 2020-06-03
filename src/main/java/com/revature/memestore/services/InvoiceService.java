@@ -1,5 +1,6 @@
 package com.revature.memestore.services;
 
+import com.revature.memestore.exceptions.ResourceNotFoundException;
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.repos.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,13 @@ public class InvoiceService {
     @Transactional(readOnly = true)
     public List<Invoice> getAllInvoices(){
 
-        return invoiceRepo.getAll();
+        List<Invoice> result = invoiceRepo.getAll();
+
+        if(result.isEmpty()){
+            throw new ResourceNotFoundException("No invoices found in the database");
+        }
+
+        return result;
 
     }
 
