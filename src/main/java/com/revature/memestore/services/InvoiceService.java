@@ -1,5 +1,6 @@
 package com.revature.memestore.services;
 
+import com.revature.memestore.exceptions.BadRequestException;
 import com.revature.memestore.exceptions.ResourceNotFoundException;
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.repos.InvoiceRepository;
@@ -39,12 +40,26 @@ public class InvoiceService {
     @Transactional
     public Invoice getInvoiceById(int id){
 
-        return invoiceRepo.findById(id);
+        if(id <= 0){
+            throw new BadRequestException("Invalid ID was input into getInvoiceById");
+        }
+
+        Invoice retrievedInvoice = invoiceRepo.findById(id);
+
+        if(retrievedInvoice == null){
+            throw new ResourceNotFoundException("No Invoice found with that ID");
+        }
+
+        return retrievedInvoice;
 
     }
 
     @Transactional
     public Invoice addNewInvoice(Invoice newInvoice){
+
+        if(newInvoice.getUser_id() <= 0 || newInvoice.getTotal_cost() <= 0){
+            throw new BadRequestException("Invalid userId or totalCost was input into addNewInvoice");
+        }
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
@@ -56,6 +71,16 @@ public class InvoiceService {
 
     @Transactional
     public boolean deleteInvoiceById(int id){
+
+        if(id <= 0){
+            throw new BadRequestException("Invalid ID was input into deleteInvoiceById");
+        }
+
+        Invoice retrievedInvoice = invoiceRepo.findById(id);
+
+        if(retrievedInvoice == null){
+            throw new ResourceNotFoundException("No Invoice found with that ID while trying to deleteInvoiceById");
+        }
 
         return invoiceRepo.deleteById(id);
 
