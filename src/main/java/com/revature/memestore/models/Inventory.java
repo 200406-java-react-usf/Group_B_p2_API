@@ -21,10 +21,17 @@ public class Inventory {
     @Column(nullable = false)
     private float cost;
 
+    @Column(nullable = false)
     private String category;
 
     @Column(nullable = false)
     private String item_image;
+
+
+
+    public Inventory(){
+
+    }
 
     public Inventory(String item_name, String details, float cost, String category, String item_image) {
         this.item_name = item_name;
