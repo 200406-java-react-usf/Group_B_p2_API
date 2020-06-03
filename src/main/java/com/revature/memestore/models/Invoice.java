@@ -13,7 +13,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int item_id;
 
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id",nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private User user_id;
 
