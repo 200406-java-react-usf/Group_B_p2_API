@@ -15,7 +15,7 @@ public class Invoice {
 
     @JoinColumn(name = "user_id",nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
-    private User user_id;
+    private int user_id;
 
     @Column(nullable = false)
     private float total_cost;
@@ -32,7 +32,7 @@ public class Invoice {
     )
     private List<Inventory> inventories;
 
-    public Invoice(User user_id, float total_cost, String date_ordered) {
+    public Invoice(int user_id, float total_cost, String date_ordered) {
         this.user_id = user_id;
         this.total_cost = total_cost;
         this.date_ordered = date_ordered;
@@ -42,11 +42,11 @@ public class Invoice {
         return item_id;
     }
 
-    public User getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public Invoice setUser_id(User user_id) {
+    public Invoice setUser_id(int user_id) {
         this.user_id = user_id;
         return this;
     }
