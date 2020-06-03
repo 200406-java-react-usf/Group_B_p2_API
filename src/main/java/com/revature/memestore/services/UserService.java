@@ -32,7 +32,7 @@ public class UserService {
 
         List<User> result = userRepo.getAll();
 
-        if(result.isEmpty() == true){
+        if(result.isEmpty()){
             throw new ResourceNotFoundException("Database contains no Users");
         }
 
