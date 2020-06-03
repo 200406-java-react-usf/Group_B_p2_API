@@ -96,5 +96,6 @@ public class AppConfig implements WebMvcConfigurer, WebApplicationInitializer {
         dispatcher.addMapping("/");
 
     }
+   
 
 }

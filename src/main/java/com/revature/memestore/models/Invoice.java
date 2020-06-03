@@ -1,6 +1,7 @@
 package com.revature.memestore.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +13,9 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int item_id;
 
-    @Column(nullable = false)
-    private String user_id;
+    @JoinColumn(nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user_id;
 
     @Column(nullable = false)
     private float total_cost;
@@ -21,7 +23,16 @@ public class Invoice {
     @Column(nullable = false)
     private String date_ordered;
 
-    public Invoice(String user_id, float total_cost, String date_ordered) {
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "inventory_invoices",
+            joinColumns = @JoinColumn(name="item_id"),
+            inverseJoinColumns = @JoinColumn(name="invoice_id")
+    )
+    private List<Inventory> inventories;
+
+    public Invoice(User user_id, float total_cost, String date_ordered) {
         this.user_id = user_id;
         this.total_cost = total_cost;
         this.date_ordered = date_ordered;
@@ -31,11 +42,11 @@ public class Invoice {
         return item_id;
     }
 
-    public String getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 
-    public Invoice setUser_id(String user_id) {
+    public Invoice setUser_id(User user_id) {
         this.user_id = user_id;
         return this;
     }
@@ -57,6 +68,18 @@ public class Invoice {
         this.date_ordered = date_ordered;
         return this;
     }
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
+    }
+
+    public List<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(List<Inventory> inventories) {
+        this.inventories = inventories;
+    }
+
 
     @Override
     public boolean equals(Object o) {
