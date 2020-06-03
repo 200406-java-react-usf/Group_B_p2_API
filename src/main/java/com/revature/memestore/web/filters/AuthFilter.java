@@ -22,6 +22,7 @@ public class AuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
         parseToken(req);
+        chain.doFilter(req,resp);
     }
 
     private void parseToken(HttpServletRequest req){
