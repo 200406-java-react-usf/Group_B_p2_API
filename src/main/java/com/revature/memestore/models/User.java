@@ -1,7 +1,10 @@
 package com.revature.memestore.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +32,9 @@ public class User {
 
     @Column
     private int role_id;
+
+    @OneToMany(cascade = ALL, mappedBy = "user_id", fetch = FetchType.EAGER)
+    private List<Invoice> invoices;
 
     public User() {
     }
