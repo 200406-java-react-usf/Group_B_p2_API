@@ -26,9 +26,8 @@ public class SecurityAspect {
         this.request = request;
     }
 
-    @Around("@annotation(com.revature.memestore.web.security.Secured")
+    @Around("@annotation(com.revature.memestore.web.security.Secured)")
     public Object secureEndpoint(ProceedingJoinPoint pjp) throws Throwable{
-
         Method method = ((MethodSignature) pjp.getSignature()).getMethod();
         Secured controllerAnnotation = method.getAnnotation(Secured.class);
         List<String> allowedRoles = Arrays.asList(controllerAnnotation.allowedRoles());
