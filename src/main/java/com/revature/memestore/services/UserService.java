@@ -3,6 +3,7 @@ package com.revature.memestore.services;
 import com.revature.memestore.exceptions.ResourceNotFoundException;
 import com.revature.memestore.models.User;
 import com.revature.memestore.repos.UserRepository;
+import com.revature.memestore.web.dtos.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +67,13 @@ public class UserService {
     public boolean deleteUserById(int id){
 
         return userRepo.deleteById(id);
+
+    }
+
+    @Transactional
+    public User authenticate(Credentials creds){
+
+        return userRepo.getByCredentials(creds);
 
     }
 
