@@ -3,6 +3,7 @@ package com.revature.memestore.web.controllers;
 import com.revature.memestore.models.User;
 import com.revature.memestore.services.UserService;
 import com.revature.memestore.web.dtos.Credentials;
+import com.revature.memestore.web.dtos.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User authenticate(@RequestBody Credentials creds){
+    public Principal authenticate(@RequestBody Credentials creds){
 
         return userService.authenticate(creds);
 
