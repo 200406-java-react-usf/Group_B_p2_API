@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -30,6 +31,15 @@ public class InventoryRepository implements CrudRepository<Inventory> {
     public Inventory findById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Inventory.class, id);
+    }
+
+    public Inventory findByItemName(String itemName){
+            Session session = sessionFactory.getCurrentSession();
+        try{
+            return session.createQuery("from Inventory i where i.item_name = :name",Inventory.class).setParameter("name", itemName).getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
     }
 
     @Override
