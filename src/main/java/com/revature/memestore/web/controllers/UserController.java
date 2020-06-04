@@ -1,5 +1,6 @@
 package com.revature.memestore.web.controllers;
 
+import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import com.revature.memestore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class UserController {
     public User getUserById(@RequestParam(required = false) int value){
 
         return userService.getUserById(value);
+
+    }
+
+    @GetMapping(value = "/invoices", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Invoice> getUserInvoicesById(@RequestParam int id){
+
+        return userService.getUsersInvoicesById(id);
 
     }
 
