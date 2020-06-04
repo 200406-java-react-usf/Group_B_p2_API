@@ -2,6 +2,7 @@ package com.revature.memestore.web.controllers;
 
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.services.InvoiceService;
+import com.revature.memestore.web.dtos.InvoiceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +37,9 @@ public class InvoiceController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Invoice addNewInvoice(@RequestBody Invoice newInvoice){
+    public InvoiceDto addNewInvoice(@RequestBody InvoiceDto newInvoiceDto){
 
-        return invoiceService.addNewInvoice(newInvoice);
+        return invoiceService.addNewInvoice(newInvoiceDto);
 
     }
 

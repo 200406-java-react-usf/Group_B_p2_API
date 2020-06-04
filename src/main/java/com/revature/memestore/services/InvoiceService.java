@@ -3,7 +3,10 @@ package com.revature.memestore.services;
 import com.revature.memestore.exceptions.BadRequestException;
 import com.revature.memestore.exceptions.ResourceNotFoundException;
 import com.revature.memestore.models.Invoice;
+import com.revature.memestore.models.User;
 import com.revature.memestore.repos.InvoiceRepository;
+import com.revature.memestore.repos.UserRepository;
+import com.revature.memestore.web.dtos.InvoiceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,17 +58,17 @@ public class InvoiceService {
     }
 
     @Transactional
-    public Invoice addNewInvoice(Invoice newInvoice){
-
-        if(newInvoice.getUser_id() <= 0 || newInvoice.getTotal_cost() <= 0){
-            throw new BadRequestException("Invalid userId or totalCost was input into addNewInvoice");
-        }
+    public InvoiceDto addNewInvoice(InvoiceDto newInvoiceDto){
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
-        newInvoice.setDate_ordered(formatter.format(date));
+        newInvoiceDto.setDate_ordered(formatter.format(date));
 
-        return invoiceRepo.save(newInvoice);
+        Invoice newInvoice = new Invoice(newInvoiceDto);
+
+        invoiceRepo.save(newInvoice, newInvoiceDto.getUser_id());
+
+        return newInvoiceDto;
 
     }
 
