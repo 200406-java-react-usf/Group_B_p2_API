@@ -24,13 +24,21 @@ public class InventoryRepository implements CrudRepository<Inventory> {
     @Override
     public List<Inventory> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Inventory", Inventory.class).getResultList();
+        try {
+            return session.createQuery("FROM Inventory", Inventory.class).getResultList();
+        }catch(NoResultException e){
+            return null;
+        }
     }
 
     @Override
     public Inventory findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Inventory.class, id);
+        try {
+            return session.get(Inventory.class, id);
+        }catch(NoResultException e){
+            return null;
+        }
     }
 
     public Inventory findByItemName(String itemName){

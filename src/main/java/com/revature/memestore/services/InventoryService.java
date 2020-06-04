@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class InventoryService {
 
-    private InventoryRepository inventoryRepository;
+    private final InventoryRepository inventoryRepository;
 
 
     @Autowired
@@ -25,8 +25,12 @@ public class InventoryService {
 
     @Transactional(readOnly = true)
     public List<Inventory> getAllItems() {
-        //
-        return inventoryRepository.getAll();
+        List<Inventory> response = inventoryRepository.getAll();
+
+        if(response.size() == 0){
+            throw new ResourceNotFoundException("No Inventory inside database");
+        }
+        return response;
     }
 
     @Transactional(readOnly = true)
@@ -79,11 +83,22 @@ public class InventoryService {
             throw new BadRequestException("Invalid Object Provided");
         }
 
-        Inventory response = inventoryRepository.findByItemName(updatedInventory.getItem_name());
-        if(response != null){
-            throw new ResourcePersistenceException("Item name is already in use");
+        Inventory itemToUpdate = inventoryRepository.findById(updatedInventory.getItem_id());
+
+        if(updatedInventory == null){
+            throw new ResourceNotFoundException("No items to update with provided Id");
         }
 
+        boolean response = isItemNameAvailable(updatedInventory);
+
+
+        if(updatedInventory.getItem_name().equals(itemToUpdate.getItem_name())){
+            return false;
+        }
+
+        if(response){
+            throw new ResourcePersistenceException("Item name is already in use testing to see if it gets here.");
+        }
 
         return inventoryRepository.update(updatedInventory);
     }
