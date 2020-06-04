@@ -37,7 +37,6 @@ public class User {
     private UserRole role;
 
     @OneToMany(mappedBy = "user", cascade = ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
     private List<Invoice> invoices;
 
     public void addToInvoices(Invoice invoice){
