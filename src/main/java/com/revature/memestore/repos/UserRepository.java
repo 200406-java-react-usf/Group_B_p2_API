@@ -33,7 +33,16 @@ public class UserRepository implements CrudRepository<User> {
     @Override
     public User findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(User.class, id);
+
+        User retrievedUser = session.get(User.class, id);
+
+        List<Invoice> invoices = session.createQuery("FROM Invoice i WHERE i.user = :user", Invoice.class)
+                .setParameter("user", retrievedUser)
+                .list();
+
+        retrievedUser.setInvoices(invoices);
+
+        return retrievedUser;
     }
 
     public List<Invoice> getInvoicesById(int id){
@@ -42,7 +51,9 @@ public class UserRepository implements CrudRepository<User> {
 
         User retrievedUser = session.get(User.class, id);
 
-        return retrievedUser.getInvoices();
+        return session.createQuery("FROM Invoice i WHERE i.user = :user", Invoice.class)
+                .setParameter("user", retrievedUser)
+                .list();
 
     }
 
