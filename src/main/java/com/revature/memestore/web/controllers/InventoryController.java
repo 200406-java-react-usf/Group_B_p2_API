@@ -3,6 +3,7 @@ package com.revature.memestore.web.controllers;
 
 import com.revature.memestore.models.Inventory;
 import com.revature.memestore.services.InventoryService;
+import com.revature.memestore.web.security.Secured;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -41,16 +42,19 @@ public class InventoryController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(allowedRoles={"Manager"})
     public Inventory saveNewInventory(@RequestBody Inventory newItem){
         return inventoryService.saveNewInventory(newItem);
     }
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(allowedRoles={"Manager"})
     public boolean updateInventory(@RequestBody Inventory updatedItem){
         return inventoryService.updateInventory(updatedItem);
     }
 
     @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(allowedRoles={"Manager"})
     public boolean deleteInventoryById(@RequestParam int id){
 
         return inventoryService.deleteInventoryById(id);

@@ -2,6 +2,7 @@ package com.revature.memestore.repos;
 
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
+import com.revature.memestore.models.UserRole;
 import com.revature.memestore.web.dtos.Credentials;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

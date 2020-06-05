@@ -3,6 +3,7 @@ package com.revature.memestore.web.controllers;
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import com.revature.memestore.services.UserService;
+import com.revature.memestore.web.security.Secured;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class UserController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured(allowedRoles = {"Manager"})
     public List<User> getAllUsers(HttpServletRequest req){
 
         return userService.getAllUsers();

@@ -38,7 +38,6 @@ public class Invoice {
     private List<Inventory> items;
 
     public void addToItems(Inventory inventory){
-
         if (items == null) items = new ArrayList<Inventory>();
         this.items.add(inventory);
 
