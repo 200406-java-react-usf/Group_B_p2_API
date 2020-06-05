@@ -53,7 +53,7 @@ public class UserService {
         User retrievedUser = userRepo.findById(id);
 
         if(retrievedUser == null){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("No user found with that ID");
         }
 
         return retrievedUser;
@@ -63,7 +63,15 @@ public class UserService {
     @Transactional
     public List<Invoice> getUsersInvoicesById(int id){
 
-        //VALIDATION
+        if(id <= 0){
+            throw new BadRequestException("Invalid Id was input into getUsersInvoicesById");
+        }
+
+        User retrievedUser = userRepo.findById(id);
+
+        if(retrievedUser == null){
+            throw new ResourceNotFoundException("No user found to get their invoices");
+        }
 
         return userRepo.getInvoicesById(id);
 
