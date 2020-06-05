@@ -1,32 +1,58 @@
 package com.revature.memestore.repos;
 
 import com.revature.memestore.models.Invoice;
+import com.revature.memestore.models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class InvoiceRepository implements CrudRepository<Invoice> {
-    @Override
+@Repository
+public class InvoiceRepository {
+
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public InvoiceRepository(SessionFactory factory){
+
+        this.sessionFactory = factory;
+
+    }
+
     public List<Invoice> getAll() {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Invoice", Invoice.class).getResultList();
     }
 
-    @Override
     public Invoice findById(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Invoice.class, id);
     }
 
-    @Override
-    public Invoice save(Invoice newInvoice) {
-        return null;
+    public Invoice save(Invoice newInvoice, int user_id) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        User user = session.load(User.class, user_id);
+
+        newInvoice.setUser(user);
+        user.addToInvoices(newInvoice);
+
+        session.save(newInvoice);
+
+        return newInvoice;
     }
 
-    @Override
     public boolean update(Invoice updatedInvoice) {
         return false;
     }
 
-    @Override
     public boolean deleteById(int id) {
-        return false;
+        Session session = sessionFactory.getCurrentSession();
+        Invoice invoiceToDelete = session.get(Invoice.class, id);
+        session.delete(invoiceToDelete);
+        return true;
     }
 }

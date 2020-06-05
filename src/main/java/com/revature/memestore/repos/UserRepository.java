@@ -1,5 +1,6 @@
 package com.revature.memestore.repos;
 
+import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import com.revature.memestore.web.dtos.Credentials;
 import org.hibernate.Session;
@@ -33,6 +34,16 @@ public class UserRepository implements CrudRepository<User> {
     public User findById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(User.class, id);
+    }
+
+    public List<Invoice> getInvoicesById(int id){
+
+        Session session = sessionFactory.getCurrentSession();
+
+        User retrievedUser = session.get(User.class, id);
+
+        return retrievedUser.getInvoices();
+
     }
 
     @Override

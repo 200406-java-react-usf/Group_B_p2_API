@@ -3,7 +3,9 @@ package com.revature.memestore.services;
 import com.revature.memestore.exceptions.AuthenticationException;
 import com.revature.memestore.exceptions.BadRequestException;
 import com.revature.memestore.exceptions.ResourceNotFoundException;
+
 import com.revature.memestore.exceptions.ResourcePersistenceException;
+import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import com.revature.memestore.models.UserRole;
 import com.revature.memestore.repos.UserRepository;
@@ -55,6 +57,15 @@ public class UserService {
         }
 
         return retrievedUser;
+
+    }
+
+    @Transactional
+    public List<Invoice> getUsersInvoicesById(int id){
+
+        //VALIDATION
+
+        return userRepo.getInvoicesById(id);
 
     }
 
