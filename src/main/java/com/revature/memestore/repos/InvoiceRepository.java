@@ -48,6 +48,8 @@ public class InvoiceRepository {
 
         newInvoice.setUser(user);
 
+        //BELIEVE THE ISSUE IS HERE, THIS IS GETTING CALLED FOR EACH ITEM
+
         user.addToInvoices(newInvoice);
 
         session.save(newInvoice);

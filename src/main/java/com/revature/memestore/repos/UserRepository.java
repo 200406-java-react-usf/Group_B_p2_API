@@ -36,6 +36,9 @@ public class UserRepository implements CrudRepository<User> {
 
         User retrievedUser = session.get(User.class, id);
 
+        //WORKAROUND FOR DUPLICATE ISSUE
+        //WHEN USER IS PRINTED, IT HAS DUPLICATES IN INVOICES
+
         List<Invoice> invoices = session.createQuery("FROM Invoice i WHERE i.user = :user", Invoice.class)
                 .setParameter("user", retrievedUser)
                 .list();
@@ -50,6 +53,9 @@ public class UserRepository implements CrudRepository<User> {
         Session session = sessionFactory.getCurrentSession();
 
         User retrievedUser = session.get(User.class, id);
+
+        //WORKAROUND FOR DUPLICATE ISSUE
+        //WHEN RETURNING THE LIST ON THE USER, IT HAS DUPLICATE INVOICES
 
         return session.createQuery("FROM Invoice i WHERE i.user = :user", Invoice.class)
                 .setParameter("user", retrievedUser)
