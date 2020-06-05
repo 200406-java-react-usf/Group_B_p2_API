@@ -3,6 +3,8 @@ package com.revature.memestore.services;
 import com.revature.memestore.exceptions.AuthenticationException;
 import com.revature.memestore.exceptions.BadRequestException;
 import com.revature.memestore.exceptions.ResourceNotFoundException;
+
+import com.revature.memestore.exceptions.ResourcePersistenceException;
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import com.revature.memestore.models.UserRole;
@@ -80,6 +82,18 @@ public class UserService {
             throw new BadRequestException("Invalid User was input into registerUser");
         }
 
+        boolean usernameConflict = isUsernameAvailable(newUser.getUsername());
+
+        if(!usernameConflict){
+            throw new ResourcePersistenceException("Username is already taken");
+        }
+
+        boolean emailConflict = isEmailAvailable(newUser.getEmail());
+
+        if(!emailConflict){
+            throw new ResourcePersistenceException("Email is already taken");
+        }
+
         newUser.setRole_id(UserRole.USER);
         return userRepo.save(newUser);
 
@@ -96,6 +110,28 @@ public class UserService {
                 updatedUser.getLast_name() == null || updatedUser.getLast_name().trim().equals("")
         ){
             throw new BadRequestException("Invalid User was input into updateUser");
+        }
+
+        User persistedUser = getUserById(updatedUser.getUser_id());
+
+        boolean usernameConflict = isUsernameAvailable(updatedUser.getUsername());
+
+        if(persistedUser.getUsername().equals(updatedUser.getUsername())){
+            usernameConflict = true;
+        }
+
+        if(!usernameConflict){
+            throw new ResourcePersistenceException("Username is already taken");
+        }
+
+        boolean emailConflict = isEmailAvailable(updatedUser.getEmail());
+
+        if(persistedUser.getEmail().equals(updatedUser.getEmail())){
+            emailConflict = true;
+        }
+
+        if(!emailConflict){
+            throw new ResourcePersistenceException("Email is already taken");
         }
 
         return userRepo.update(updatedUser);
@@ -138,6 +174,34 @@ public class UserService {
         }
 
         return new Principal(retrievedUser);
+
+    }
+
+    private boolean isUsernameAvailable(String username){
+
+        User result;
+
+        try{
+            result = userRepo.getByUsername(username);
+        }catch(NoResultException e){
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private boolean isEmailAvailable(String email){
+
+        User result;
+
+        try{
+            result = userRepo.getByEmail(email);
+        }catch(NoResultException e){
+            return true;
+        }
+
+        return false;
 
     }
 
