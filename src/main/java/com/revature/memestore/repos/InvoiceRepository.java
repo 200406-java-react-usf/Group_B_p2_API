@@ -1,5 +1,6 @@
 package com.revature.memestore.repos;
 
+import com.revature.memestore.models.Inventory;
 import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import org.hibernate.Session;
@@ -31,13 +32,22 @@ public class InvoiceRepository {
         return session.get(Invoice.class, id);
     }
 
-    public Invoice save(Invoice newInvoice, int user_id) {
+    public Invoice save(Invoice newInvoice, int user_id, List<Integer> item_ids) {
 
         Session session = sessionFactory.getCurrentSession();
+
+        for(int id : item_ids){
+
+            Inventory inventory = session.load(Inventory.class, id);
+
+            newInvoice.addToItems(inventory);
+
+        }
 
         User user = session.load(User.class, user_id);
 
         newInvoice.setUser(user);
+
         user.addToInvoices(newInvoice);
 
         session.save(newInvoice);

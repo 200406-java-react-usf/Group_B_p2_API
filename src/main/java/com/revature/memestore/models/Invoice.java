@@ -2,8 +2,10 @@ package com.revature.memestore.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.revature.memestore.web.dtos.InvoiceDto;
+import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,23 +29,23 @@ public class Invoice {
     @Column(nullable = false)
     private String date_ordered;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "invoice_inventories",
+            joinColumns = {@JoinColumn(name = "invoice_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")}
+    )
+    private List<Inventory> items;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "inventory_invoices",
-//            joinColumns = @JoinColumn(name="item_id"),
-//            inverseJoinColumns = @JoinColumn(name="invoice_id")
-//    )
-//    private List<Inventory> inventories;
+    public void addToItems(Inventory inventory){
+
+        if (items == null) items = new ArrayList<Inventory>();
+        this.items.add(inventory);
+
+    }
 
     public Invoice() {
     }
-
-//    public Invoice(int user_id, float total_cost, List<Inventory> inventories) {
-//        this.user_id = user_id;
-//        this.total_cost = total_cost;
-//        this.inventories = inventories;
-//    }
 
     public Invoice(InvoiceDto invoiceDto){
         this.total_cost = invoiceDto.getTotal_cost();
@@ -88,6 +90,14 @@ public class Invoice {
         this.date_ordered = date_ordered;
     }
 
+    public List<Inventory> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Inventory> items) {
+        this.items = items;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,12 +106,13 @@ public class Invoice {
         return invoice_id == invoice.invoice_id &&
                 Float.compare(invoice.total_cost, total_cost) == 0 &&
                 Objects.equals(user, invoice.user) &&
-                Objects.equals(date_ordered, invoice.date_ordered);
+                Objects.equals(date_ordered, invoice.date_ordered) &&
+                Objects.equals(items, invoice.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoice_id, user, total_cost, date_ordered);
+        return Objects.hash(invoice_id, user, total_cost, date_ordered, items);
     }
 
     @Override

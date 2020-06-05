@@ -66,7 +66,7 @@ public class InvoiceService {
 
         Invoice newInvoice = new Invoice(newInvoiceDto);
 
-        invoiceRepo.save(newInvoice, newInvoiceDto.getUser_id());
+        invoiceRepo.save(newInvoice, newInvoiceDto.getUser_id(), newInvoiceDto.getItems());
 
         return newInvoiceDto;
 

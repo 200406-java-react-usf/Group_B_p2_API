@@ -1,5 +1,8 @@
 package com.revature.memestore.web.dtos;
 
+import com.revature.memestore.models.Inventory;
+
+import java.util.List;
 import java.util.Objects;
 
 public class InvoiceDto {
@@ -9,6 +12,8 @@ public class InvoiceDto {
     private float total_cost;
 
     private String date_ordered;
+
+    private List<Integer> items;
 
     public InvoiceDto() {
     }
@@ -46,6 +51,14 @@ public class InvoiceDto {
 
     public void setDate_ordered(String date_ordered) {
         this.date_ordered = date_ordered;
+    }
+
+    public List<Integer> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Integer> items) {
+        this.items = items;
     }
 
     @Override
