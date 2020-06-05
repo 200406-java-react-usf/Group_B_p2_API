@@ -3,10 +3,14 @@ package com.revature.memestore.exceptions;
 public class AuthenticationException extends MemeStoreException {
 
     public AuthenticationException(){
-        super("Authentication Failed!");
+        super(401,"Authentication Failed!");
     }
 
     public AuthenticationException(String message){
-        super(message);
+        super(401,message);
+    }
+
+    public AuthenticationException(String message, Throwable cause) {
+        super(401,message, cause);
     }
 }

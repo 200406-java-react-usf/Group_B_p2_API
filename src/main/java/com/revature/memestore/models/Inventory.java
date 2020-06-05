@@ -27,6 +27,8 @@ public class Inventory {
     @Column(nullable = false)
     private String item_image;
 
+
+
     public Inventory(){
 
     }

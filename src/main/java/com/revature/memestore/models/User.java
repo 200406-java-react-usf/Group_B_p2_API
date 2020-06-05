@@ -1,7 +1,13 @@
 package com.revature.memestore.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "users")
@@ -27,19 +33,29 @@ public class User {
     @Column(nullable = false)
     private String last_name;
 
-    @Column
-    private int role_id;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @OneToMany(mappedBy = "user", cascade = ALL, fetch = FetchType.EAGER)
+    private List<Invoice> invoices;
+
+    public void addToInvoices(Invoice invoice){
+
+        if (invoices == null) invoices = new ArrayList<Invoice>();
+        this.invoices.add(invoice);
+
+    }
 
     public User() {
     }
 
-    public User(String username, String password, String email, String first_name, String last_name, int role_id) {
+    public User(String username, String password, String email, String first_name, String last_name, UserRole role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.first_name = first_name;
         this.last_name = last_name;
-        this.role_id = role_id;
+        this.role = role;
     }
 
     public int getUser_id() {
@@ -91,13 +107,21 @@ public class User {
         return this;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public UserRole getRole_id() {
+        return role;
     }
 
-    public User setRole_id(int role_id) {
-        this.role_id = role_id;
+    public User setRole_id(UserRole role_id) {
+        this.role = role_id;
         return this;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     @Override
@@ -106,7 +130,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return user_id == user.user_id &&
-                role_id == user.role_id &&
+                role == user.role &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
@@ -116,7 +140,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, username, password, email, first_name, last_name, role_id);
+        return Objects.hash(user_id, username, password, email, first_name, last_name, role);
     }
 
     @Override
@@ -128,7 +152,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", role_id=" + role_id +
                 '}';
     }
 }

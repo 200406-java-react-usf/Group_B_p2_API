@@ -2,16 +2,29 @@ package com.revature.memestore.exceptions;
 
 public class MemeStoreException extends RuntimeException{
 
-    public MemeStoreException(String message){
-        super(message);
-    }
+    private int status;
 
-    public MemeStoreException(Throwable cause){
+    public MemeStoreException(int status){this.status = status;}
+
+    public MemeStoreException(int status, Throwable cause){
+
         super(cause);
+        this.status = status;
     }
 
-    public MemeStoreException(String message, Throwable cause){
+    public MemeStoreException(int status, String message){
+        super(message);
+        this.status = status;
+    }
+
+    public MemeStoreException(int status, String message, Throwable cause){
+
         super(message,cause);
+        this.status = status;
+    }
+
+    public int getStatus(){
+        return status;
     }
 
 

@@ -35,6 +35,11 @@ public class InventoryController {
         return inventoryService.getInvoiceById(value);
     }
 
+    @GetMapping(value = "/item", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Inventory getInvoiceByName(@RequestParam(required = false)String value){
+        return inventoryService.getInvoiceByName(value);
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Inventory saveNewInventory(@RequestBody Inventory newItem){
         return inventoryService.saveNewInventory(newItem);
