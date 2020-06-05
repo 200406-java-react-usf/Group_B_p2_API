@@ -1,7 +1,13 @@
 package com.revature.memestore.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +35,16 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @OneToMany(mappedBy = "user", cascade = ALL, fetch = FetchType.EAGER)
+    private List<Invoice> invoices;
+
+    public void addToInvoices(Invoice invoice){
+
+        if (invoices == null) invoices = new ArrayList<Invoice>();
+        this.invoices.add(invoice);
+
+    }
 
     public User() {
     }
@@ -100,6 +116,14 @@ public class User {
         return this;
     }
 
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,7 +152,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", role_id=" + role +
                 '}';
     }
 }

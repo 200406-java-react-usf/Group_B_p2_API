@@ -1,6 +1,9 @@
 package com.revature.memestore.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +29,10 @@ public class Inventory {
 
     @Column(nullable = false)
     private String item_image;
+
+    @ManyToMany(mappedBy = "items")
+    @JsonIgnore
+    private List<Invoice> invoices;
 
     public Inventory(){
 
