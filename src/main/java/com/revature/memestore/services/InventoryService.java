@@ -27,7 +27,7 @@ public class InventoryService {
     public List<Inventory> getAllItems() {
         List<Inventory> response = inventoryRepository.getAll();
 
-        if(response.isEmpty()){
+        if(response.size() == 0){
             throw new ResourceNotFoundException("No Inventory inside database");
         }
         return response;
