@@ -12,5 +12,5 @@ import org.junit.runners.Suite;
         InvoiceServiceTest.class,
         InventoryServiceTest.class
 })
-public class UserServiceTestSuite {
+public class ServiceTestSuite {
 }
