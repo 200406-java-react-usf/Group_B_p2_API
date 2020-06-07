@@ -1,5 +1,6 @@
 package com.revature.memestore.services;
 
+import com.revature.memestore.exceptions.AuthenticationException;
 import com.revature.memestore.exceptions.BadRequestException;
 import com.revature.memestore.exceptions.ResourceNotFoundException;
 import com.revature.memestore.exceptions.ResourcePersistenceException;
@@ -7,6 +8,8 @@ import com.revature.memestore.models.Invoice;
 import com.revature.memestore.models.User;
 import com.revature.memestore.models.UserRole;
 import com.revature.memestore.repos.UserRepository;
+import com.revature.memestore.web.dtos.Credentials;
+import com.revature.memestore.web.dtos.Principal;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -527,6 +530,135 @@ public class UserServiceTest {
         boolean result = userService.updateUser(mockUserUpdated);
 
         assertTrue(result);
+
+    }
+
+    @Test
+    public void shouldReturnTrueWhenUserIsSuccessfullyUpdated(){
+
+        User mockUser = new User(1,"test1", "password", "test1@me.com", "test", "one", UserRole.USER);
+
+        when(userRepository.findById(1)).thenReturn(mockUser);
+        when(userRepository.deleteById(1)).thenReturn(true);
+
+        assertTrue(userService.deleteUserById(1));
+
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionWhenInvalidIdIsGivenToDelete(){
+
+        BadRequestException thrown = assertThrows(BadRequestException.class, ()->{
+
+           userService.deleteUserById(0);
+
+        });
+
+    }
+
+    @Test
+    public void shouldThrowResourceNotFoundErrorWhenNoUserFoundToDelete(){
+
+        when(userRepository.findById(1)).thenReturn(null);
+
+        ResourceNotFoundException thrown = assertThrows(ResourceNotFoundException.class, ()->{
+
+            userService.deleteUserById(1);
+
+        });
+
+    }
+
+    @Test
+    public void shouldReturnNewPrincipalWhenAuthenticateIsGivenValidCreds(){
+
+        User mockUser = new User(1,"test1", "password", "test1@me.com", "test", "one", UserRole.USER);
+
+        Credentials mockCreds = new Credentials(mockUser.getUsername(),mockUser.getPassword());
+
+        when(userRepository.getByCredentials(mockCreds)).thenReturn(mockUser);
+
+        Principal result = userService.authenticate(mockCreds);
+
+        assertEquals(result.getUsername(), mockUser.getUsername());
+        assertEquals(result.getId(), mockUser.getUser_id());
+
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionWhenAuthenticateIsGivenNullUsername(){
+
+        User mockUser = new User(1,null, "password", "test1@me.com", "test", "one", UserRole.USER);
+
+        Credentials mockCreds = new Credentials(mockUser.getUsername(),mockUser.getPassword());
+
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+
+           userService.authenticate(mockCreds);
+
+        });
+
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionWhenAuthenticateIsGivenEmptyUsername(){
+
+        User mockUser = new User(1,"     ", "password", "test1@me.com", "test", "one", UserRole.USER);
+
+        Credentials mockCreds = new Credentials(mockUser.getUsername(),mockUser.getPassword());
+
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+
+            userService.authenticate(mockCreds);
+
+        });
+
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionWhenAuthenticateIsGivenNullPassword(){
+
+        User mockUser = new User(1,"test1", null, "test1@me.com", "test", "one", UserRole.USER);
+
+        Credentials mockCreds = new Credentials(mockUser.getUsername(),mockUser.getPassword());
+
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+
+            userService.authenticate(mockCreds);
+
+        });
+
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionWhenAuthenticateIsGivenEmptyPassword(){
+
+        User mockUser = new User(1,"test1", "       ", "test1@me.com", "test", "one", UserRole.USER);
+
+        Credentials mockCreds = new Credentials(mockUser.getUsername(),mockUser.getPassword());
+
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> {
+
+            userService.authenticate(mockCreds);
+
+        });
+
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionWhenAuthenticateCantFindAUserWithGivenCreds(){
+
+        User mockUser = new User(1,"test1", "password", "test1@me.com", "test", "one", UserRole.USER);
+
+        Credentials mockCreds = new Credentials(mockUser.getUsername(),mockUser.getPassword());
+
+        when(userRepository.getByCredentials(mockCreds)).thenThrow(NoResultException.class);
+
+        AuthenticationException thrown = assertThrows(AuthenticationException.class, () -> {
+
+           userService.authenticate(mockCreds);
+
+        });
 
     }
 
