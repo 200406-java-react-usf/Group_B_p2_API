@@ -58,6 +58,13 @@ public class Invoice {
         this.date_ordered = date_ordered;
     }
 
+    public Invoice(int invoice_id, User user, float total_cost, String date_ordered) {
+        this.invoice_id = invoice_id;
+        this.user = user;
+        this.total_cost = total_cost;
+        this.date_ordered = date_ordered;
+    }
+
     public int getInvoice_id() {
         return invoice_id;
     }
