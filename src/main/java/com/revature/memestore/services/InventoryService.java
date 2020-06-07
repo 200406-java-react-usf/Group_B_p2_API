@@ -27,7 +27,7 @@ public class InventoryService {
     public List<Inventory> getAllItems() {
         List<Inventory> response = inventoryRepository.getAll();
 
-        if(response.size() == 0){
+        if(response.isEmpty()){
             throw new ResourceNotFoundException("No Inventory inside database");
         }
         return response;
@@ -67,7 +67,7 @@ public class InventoryService {
             throw new BadRequestException("Invalid Object Provided");
         }
 
-        Inventory response = inventoryRepository.findByItemName(newObj.getItem_name().toString());
+        Inventory response = inventoryRepository.findByItemName(newObj.getItem_name());
         if(response != null){
             throw new ResourcePersistenceException("Item name is already in use");
         }
@@ -97,7 +97,7 @@ public class InventoryService {
         }
 
         if(response){
-            throw new ResourcePersistenceException("Item name is already in use testing to see if it gets here.");
+            throw new ResourcePersistenceException("Item name is already in use.");
         }
 
         return inventoryRepository.update(updatedInventory);
