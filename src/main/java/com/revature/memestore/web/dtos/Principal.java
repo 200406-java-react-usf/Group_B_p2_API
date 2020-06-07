@@ -14,8 +14,8 @@ public class Principal {
     public Principal() {
     }
 
-    public Principal(int id, String username, UserRole role) {
-        this.user_id = id;
+    public Principal(int user_id, String username, UserRole role) {
+        this.user_id = user_id;
         this.username = username;
         this.role = role;
     }
@@ -28,12 +28,12 @@ public class Principal {
 
     }
 
-    public int getId() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setId(int id) {
-        this.user_id = id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {

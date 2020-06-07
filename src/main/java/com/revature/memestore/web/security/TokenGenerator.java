@@ -16,7 +16,7 @@ public class TokenGenerator {
         long now = System.currentTimeMillis();
 
         JwtBuilder builder = Jwts.builder()
-                                    .setId(Integer.toString(subject.getId()))
+                                    .setId(Integer.toString(subject.getUser_id()))
                                     .setSubject(subject.getUsername())
                                     .claim("role", subject.getRole().toString())
                                     .setIssuer("memestore")
