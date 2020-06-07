@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Principal {
 
-    private int id;
+    private int user_id;
     private String username;
     private UserRole role;
 
@@ -15,25 +15,25 @@ public class Principal {
     }
 
     public Principal(int id, String username, UserRole role) {
-        this.id = id;
+        this.user_id = id;
         this.username = username;
         this.role = role;
     }
 
     public Principal(User u){
 
-        this.id = u.getUser_id();
+        this.user_id = u.getUser_id();
         this.username = u.getUsername();
         this.role = u.getRole_id();
 
     }
 
     public int getId() {
-        return id;
+        return user_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.user_id = id;
     }
 
     public String getUsername() {
@@ -57,20 +57,20 @@ public class Principal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Principal principal = (Principal) o;
-        return id == principal.id &&
+        return user_id == principal.user_id &&
                 Objects.equals(username, principal.username) &&
                 role == principal.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, role);
+        return Objects.hash(user_id, username, role);
     }
 
     @Override
     public String toString() {
         return "Principal{" +
-                "id=" + id +
+                "id=" + user_id +
                 ", username='" + username + '\'' +
                 ", role=" + role +
                 '}';
