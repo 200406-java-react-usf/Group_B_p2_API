@@ -24,7 +24,6 @@ public class InvoiceController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(allowedRoles={"Manager"})
     public List<Invoice> getAllInvoices(){
 
         return invoiceService.getAllInvoices();
@@ -32,7 +31,6 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(allowedRoles={"Manager"})
     public Invoice getInvoiceById(@RequestParam int value){
 
         return invoiceService.getInvoiceById(value);
@@ -40,7 +38,6 @@ public class InvoiceController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(allowedRoles={"User"})
     public InvoiceDto addNewInvoice(@RequestBody InvoiceDto newInvoiceDto){
 
         return invoiceService.addNewInvoice(newInvoiceDto);
@@ -48,7 +45,6 @@ public class InvoiceController {
     }
 
     @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(allowedRoles={"Manager"})
     public boolean deleteInvoiceById(@RequestParam int id){
 
         return invoiceService.deleteInvoiceById(id);
