@@ -46,6 +46,15 @@ public class Inventory {
         this.item_image = item_image;
     }
 
+    public Inventory(int item_id, String item_name, String details, float cost, String category, String item_image) {
+        this.item_id = item_id;
+        this.item_name = item_name;
+        this.details = details;
+        this.cost = cost;
+        this.category = category;
+        this.item_image = item_image;
+    }
+
     public int getItem_id() {
         return item_id;
     }
